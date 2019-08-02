@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from 'react-testing-library';
 import renderer from 'react-test-renderer';
 import 'jest-styled-components';
 
@@ -12,18 +12,19 @@ describe('<IssueIcon />', () => {
   });
 
   it('should have a className attribute', () => {
-    const renderedComponent = shallow(<IssueIcon />);
-    expect(renderedComponent.prop('className')).toBeDefined();
+    const { container } = render(<IssueIcon />);
+    expect(container.firstChild.hasAttribute('class')).toBe(true);
   });
 
   it('should adopt a valid attribute', () => {
     const id = 'test';
-    const renderedComponent = shallow(<IssueIcon id={id} />);
-    expect(renderedComponent.prop('id')).toEqual(id);
+    const { container } = render(<IssueIcon id={id} />);
+    expect(container.firstChild.hasAttribute('id')).toBe(true);
+    expect(container.firstChild.id).toEqual(id);
   });
 
   it('should adopt any attribute', () => {
-    const renderedComponent = shallow(<IssueIcon attribute="test" />);
-    expect(renderedComponent.prop('attribute')).toBeDefined();
+    const { container } = render(<IssueIcon attribute="test" />);
+    expect(container.firstChild.hasAttribute('attribute')).toBe(true);
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from 'react-testing-library';
 import renderer from 'react-test-renderer';
 import 'jest-styled-components';
 
@@ -12,18 +12,19 @@ describe('<IssueLink />', () => {
   });
 
   it('should have a className attribute', () => {
-    const renderedComponent = shallow(<IssueLink />);
-    expect(renderedComponent.prop('className')).toBeDefined();
+    const { container } = render(<IssueLink />);
+    expect(container.firstChild.hasAttribute('class')).toBe(true);
   });
 
   it('should adopt a valid attribute', () => {
     const id = 'test';
-    const renderedComponent = shallow(<IssueLink id={id} />);
-    expect(renderedComponent.prop('id')).toEqual(id);
+    const { container } = render(<IssueLink id={id} />);
+    expect(container.firstChild.hasAttribute('id')).toBe(true);
+    expect(container.firstChild.id).toEqual(id);
   });
 
   it('should not adopt an invalid attribute', () => {
-    const renderedComponent = shallow(<IssueLink attribute="test" />);
-    expect(renderedComponent.prop('attribute')).toBeUndefined();
+    const { container } = render(<IssueLink attribute="test" />);
+    expect(container.firstChild.hasAttribute('attribute')).toBe(false);
   });
 });
